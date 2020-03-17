@@ -45,16 +45,19 @@ public class PlayerController : MonoBehaviour
     //필요한 컴포넌트
     [SerializeField]
     private Camera theCamera;
-
     private Rigidbody myRigid;
+    private GunController theGunController;
 
     void Start()
     {
         capsuleCollider = GetComponent<CapsuleCollider>(); //Plyer의 component
         myRigid = GetComponent<Rigidbody>(); //Player의 component
+        theGunController = FindObjectOfType<GunController>();
+
         applySpeed = walkSpeed;
         originPosY = theCamera.transform.localPosition.y; //카메라의 위치 이동 localPosition -> Player 기준이기 때문
         applycrouchPosY = originPosY;
+
     }
 
     void Update()
@@ -100,6 +103,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isCrouch)
             Crouch();
+
+        theGunController.CancelFineSight();
 
         isRun = true;
         applySpeed = runSpeed;
