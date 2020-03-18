@@ -10,16 +10,27 @@ public class GunController : MonoBehaviour
     private float currentFireRate; //연사속도
 
     private bool isReload = false;
+    [HideInInspector]
     private bool isFineSightMode = false; //정조
-
     //본래 포지션
-    [SerializeField]
     private Vector3 originPos;
 
     private AudioSource audioSource;
 
+    //레이저 충돌 정보 받아옴
+    private RaycastHit hitInfo;
+
+    [SerializeField]
+    private Camera theCam;
+
+    //피격 이펙트
+    [SerializeField]
+    private GameObject hit_effect_prefab;
+
+
     private void Start()
     {
+        originPos = Vector3.zero;
         audioSource = GetComponent<AudioSource>();
         //originPos = transform.localPosition;
     }
@@ -70,9 +81,18 @@ public class GunController : MonoBehaviour
         currentFireRate = currentGun.fireRate; //연사속도 재계
         PlaySE(currentGun.fire_Sound);
         currentGun.muzzleFlash.Play();
-
+        Hit();
         StopAllCoroutines();
         StartCoroutine(RetroActionCoroutine());
+    }
+
+    private void Hit()
+    {
+        if (Physics.Raycast(theCam.transform.position, theCam.transform.forward, out hitInfo, currentGun.range))
+        {
+            GameObject clone = Instantiate(hit_effect_prefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+            Destroy(clone, 2f);
+        }
     }
 
     private void TryReload()
