@@ -13,6 +13,7 @@ public class GunController : MonoBehaviour
     [HideInInspector]
     private bool isFineSightMode = false; //정조
     //본래 포지션
+    [SerializeField]
     private Vector3 originPos;
 
     private AudioSource audioSource;
@@ -30,9 +31,9 @@ public class GunController : MonoBehaviour
 
     private void Start()
     {
-        originPos = Vector3.zero;
+        //originPos = Vector3.zero;
         audioSource = GetComponent<AudioSource>();
-        //originPos = transform.localPosition;
+        originPos = transform.localPosition;
     }
 
     void Update()

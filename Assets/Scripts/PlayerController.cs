@@ -20,9 +20,13 @@ public class PlayerController : MonoBehaviour
     private float jumpForce;
 
     //상태
+    private bool isWalk = false;
     private bool isRun = false;
     private bool isGround = true;
     private bool isCrouch = false;
+
+    //움직임 체크 변
+    private Vector3 lastPos;
 
     //얼마나 앉을지 결정하는 함수
     [SerializeField]
@@ -47,16 +51,19 @@ public class PlayerController : MonoBehaviour
     private Camera theCamera;
     private Rigidbody myRigid;
     private GunController theGunController;
+    private Crosshair theCrosshair;
 
     void Start()
     {
         capsuleCollider = GetComponent<CapsuleCollider>(); //Plyer의 component
         myRigid = GetComponent<Rigidbody>(); //Player의 component
         theGunController = FindObjectOfType<GunController>();
+        theCrosshair = FindObjectOfType<Crosshair>();
 
         applySpeed = walkSpeed;
         originPosY = theCamera.transform.localPosition.y; //카메라의 위치 이동 localPosition -> Player 기준이기 때문
         applycrouchPosY = originPosY;
+
 
     }
 
@@ -67,9 +74,12 @@ public class PlayerController : MonoBehaviour
         TryJump();
         TryCrouch();
         Move();
+        MoveCheck();
         CameraRotation();
         CharacterRotation();
     }
+
+    
 
     private void TryRun()
     {
@@ -107,12 +117,14 @@ public class PlayerController : MonoBehaviour
         theGunController.CancelFineSight();
 
         isRun = true;
+        theCrosshair.RunningAnimation(isRun);
         applySpeed = runSpeed;
     }
 
     private void RunningCancel()
     {
         isRun = false;
+        theCrosshair.RunningAnimation(isRun);
         applySpeed = walkSpeed;
     }
 
@@ -127,8 +139,8 @@ public class PlayerController : MonoBehaviour
     private void Crouch()
     {
         isCrouch = !isCrouch;
-
-        if(isCrouch)
+        theCrosshair.CrouchingAnimation(isCrouch);
+        if (isCrouch)
         {
             applySpeed = crouchSpeed;
             applycrouchPosY = crouchPosY;
@@ -179,6 +191,20 @@ public class PlayerController : MonoBehaviour
         Vector3 _velocity = (_moveHorizontal + _moveVertical).normalized * applySpeed; // (1, 0, 1) (0.5, 0, 0.5) y = x
 
         myRigid.MovePosition(transform.position + _velocity * Time.deltaTime); //움직임 순간이동x Time.deltaTime - 0.0016만큼 조금씩 움직임
+    }
+
+    private void MoveCheck()
+    {
+        if(!isRun && !isCrouch)
+        {
+            if (Vector3.Distance(lastPos, transform.position) >= 0.01f)
+                isWalk = true;
+            else
+                isWalk = false;
+            theCrosshair.WalkingAnimation(isWalk);
+            lastPos = transform.position;
+        }
+        
     }
 
     private void CharacterRotation()
