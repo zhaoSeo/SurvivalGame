@@ -275,7 +275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunName: SubMachineGun1
   range: 100
-  accuracy: 0
+  accuracy: 0.04
   fireRate: 0.2
   reloadTime: 2
   damage: 30
@@ -285,7 +285,7 @@ MonoBehaviour:
   carryBulletCount: 23
   retroActionForce: 0.3
   retroActionFineSightForce: 0.05
-  fineSightOrginPos: {x: -0.55, y: -0.5, z: -0.75}
+  fineSightOrginPos: {x: -0.25, y: -1.1, z: -0.73}
   anime: {fileID: 128154086}
   muzzleFlash: {fileID: 794410766}
   fire_Sound: {fileID: 8300000, guid: 18d2a6ca3e5be4056b3ab40f4a8d5cc3, type: 3}
@@ -510,8 +510,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 120719922}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.8, z: 0}
+  m_LocalRotation: {x: -0.0011418218, y: 0.04360446, z: -0.026152011, w: 0.9987059}
+  m_LocalPosition: {x: 0, y: -1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 120952326}
@@ -521,7 +521,7 @@ Transform:
   - {fileID: 794410767}
   m_Father: {fileID: 1713274210}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 5, z: -3}
 --- !u!4 &120952340
 Transform:
   m_ObjectHideFlags: 0
@@ -5879,6 +5879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1060057457}
   go_crosshairHUD: {fileID: 1060057455}
+  theGunController: {fileID: 640566642}
 --- !u!1 &478066522
 GameObject:
   m_ObjectHideFlags: 0
@@ -6117,7 +6118,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 640566639}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalPosition: {x: 0, y: -1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 825816445}
@@ -6151,6 +6152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentGun: {fileID: 120719923}
+  originPos: {x: 0, y: -1.5, z: 0}
   theCam: {fileID: 1926309672}
   hit_effect_prefab: {fileID: 2010378198}
 --- !u!82 &640566643
