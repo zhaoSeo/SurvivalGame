@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\HandController.cs" />
     <Compile Include="Assets\Scripts\HUD.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\WeaponManager.cs" />
     <None Include="Assets\Water Shader\Water_Shader.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Users/zhao/Documents/study/Unity/SurvivalGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
