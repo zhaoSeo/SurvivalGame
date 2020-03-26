@@ -48,6 +48,61 @@ public class WeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(!isChangeWeapon)
+        {
+            if(Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                StartCoroutine(ChangeWeaponCoroutine("HAND", "맨손"));
+            } else if(Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                StartCoroutine(ChangeWeaponCoroutine("GUN", "SubMachineGun1"));
+            }
+        }
     }
+
+    public IEnumerator ChangeWeaponCoroutine(string _type, string _name)
+    {
+        isChangeWeapon = true;
+        currentWeaponAnime.SetTrigger("Weapon_Out");
+        Debug.Log("1");
+        yield return new WaitForSeconds(changeWeaponDealyTime);
+        Debug.Log("2");
+        CancelPreWeaponAction();
+        WeaponChange(_type, _name);
+        Debug.Log("3");
+        yield return new WaitForSeconds(changeWeaponEndDelayTime);
+        Debug.Log("4");
+        currentWeaponType = _type;
+        isChangeWeapon = false;
+    }
+
+    private void CancelPreWeaponAction()
+    {
+        switch(currentWeaponType)
+        {
+            case "GUN":
+                theGunController.CancelFineSight();
+                theGunController.CancelReload();
+                break;
+            case "HAND":
+                break;
+        }
+    }
+
+    private void WeaponChange(string _type, string _name)
+    {
+        Debug.Log("4.5");
+        if (_type == "GUN")
+        {
+            Debug.Log("5");
+            theGunController.GunChange(gunDictionary[_name]);
+        }
+        else if (_type == "HAND")
+        {
+            Debug.Log("5.5");
+            theHandController.HandChange(handDictionary[_name]);
+        }
+            
+    }
+
 }

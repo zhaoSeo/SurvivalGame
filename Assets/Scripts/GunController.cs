@@ -35,6 +35,9 @@ public class GunController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         originPos = transform.localPosition;
         theCrosshair = FindObjectOfType<Crosshair>();
+
+        WeaponManager.currentWeapon = currentGun.GetComponent<Transform>();
+        WeaponManager.currentWeaponAnime = currentGun.anime;
     }
 
     void Update()
@@ -108,6 +111,15 @@ public class GunController : MonoBehaviour
         {
             CancelFineSight();
             StartCoroutine(ReloadCoroutine());
+        }
+    }
+
+    public void CancelReload()
+    {
+        if(isReload)
+        {
+            StopAllCoroutines();
+            isReload = false;
         }
     }
 
@@ -244,5 +256,19 @@ public class GunController : MonoBehaviour
     public bool GetFineSightMode()
     {
         return isFineSightMode;
+    }
+
+    public void GunChange(Gun _gun)
+    {
+        Debug.Log("6");
+        if (WeaponManager.currentWeapon != null)
+            WeaponManager.currentWeapon.gameObject.SetActive(false);
+        currentGun = _gun;
+        WeaponManager.currentWeapon = currentGun.GetComponent<Transform>();
+        WeaponManager.currentWeaponAnime = currentGun.anime;
+
+        currentGun.transform.localPosition = Vector3.zero; //주의
+        currentGun.gameObject.SetActive(true);
+        Debug.Log("7");
     }
 }
