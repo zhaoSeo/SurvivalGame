@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
         isGround = Physics.Raycast(transform.position, Vector3.down, capsuleCollider.bounds.extents.y + 0.1f);
         //transform 말고 vector 쓰는 이유는 방향이 바뀔 수 있기 때문
         //capsulecollider.bounds 의 절반의 거리 extends
-        theCrosshair.RunningAnimation(!isGround);
+        theCrosshair.JumpingAnimation(!isGround);
     }
 
     private void Move()

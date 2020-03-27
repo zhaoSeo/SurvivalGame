@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
+    public static bool isActivate = true;
+
     [SerializeField]
     private Gun currentGun;
 
@@ -42,10 +44,14 @@ public class GunController : MonoBehaviour
 
     void Update()
     {
-        GunFireRateCal();
-        TryFire();
-        TryReload();
-        TryFineSight();
+        if (isActivate)
+        {
+            GunFireRateCal();
+            TryFire();
+            TryReload();
+            TryFineSight();
+        }
+       
     }
 
     private void GunFireRateCal()
@@ -260,15 +266,15 @@ public class GunController : MonoBehaviour
 
     public void GunChange(Gun _gun)
     {
-        Debug.Log("6");
         if (WeaponManager.currentWeapon != null)
             WeaponManager.currentWeapon.gameObject.SetActive(false);
+
         currentGun = _gun;
         WeaponManager.currentWeapon = currentGun.GetComponent<Transform>();
         WeaponManager.currentWeaponAnime = currentGun.anime;
 
-        currentGun.transform.localPosition = Vector3.zero; //주의
+        currentGun.transform.localPosition = new Vector3(originPos.x, originPos.y, originPos.z); //주의
         currentGun.gameObject.SetActive(true);
-        Debug.Log("7");
+        isActivate = true;
     }
 }
